@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Results</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- If using external CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        .result-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .result-item p {
+            margin: 5px 0;
+        }
+        a {
+            display: inline-block;
+            background-color: #0056b3;
+            color: #fff;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+    <h1>Filtered Results</h1>
+    <!-- Display the pie chart -->
+    <!-- <img src="data:image/png;base64,{{ plot_data }}" alt="Pie Chart"> -->
+
+    <div id="results">
+        {% for item in data %}
+        <div class="result-item">
+            <p>Start Date: {{ item.start_date }}</p>
+            <p>End Date: {{ item.end_date }}</p>
+            <p>Transaction Type: {{ item.transaction_type }}</p>
+            <p>Customer Code: {{ item.customer_code }}</p>
+            <p>Scheme Type: {{ item.scheme_type }}</p>
+            <p>Channel: {{ item.channel }}</p>
+        </div>
+        {% empty %}
+        <p>No results found.</p>
+        {% endfor %}
+    </div>
+    <a href="{% url 'index' %}">Back to Filter</a>
+</body>
+</html>

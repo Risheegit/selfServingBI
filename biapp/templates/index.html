@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            position: relative;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        .wrapper{
+            background-color: blueviolet;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            position: absolute;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="date"],
+        select,
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .result-item {
+            background-color: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div className = "wrapper" >
+        <!-- {% csrf_token %} -->
+        <h1>Data Filter</h1>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+       
+        <label for="channel">Channel:</label>
+        <select id="channel" name="channel">
+            <option value="">Select</option>
+            <option value="upi">UPI</option>
+            <option value="ecs">ECS</option>
+            <option value="aeps">AEPS</option>
+            <option value="atm">ATM</option>
+            <option value="bna">BNA</option>
+            <option value="auto">AUTO</option>
+            <option value="dig">DIG</option>
+            <option value="not_identified">NOT_IDENTIFIED</option>
+            <option value="brn">BRN</option>
+            <option value="ni">NI</option>
+            <option value="pos">POS</option>
+        </select>
+
+        <label for="transaction_type">Transaction Type:</label>
+        <select id="transaction_type" name="transaction_type">
+            <option value="">Select</option>
+            <option value="merchant_payment">Merchant Payment</option>
+            <option value="ft_credit">FT Credit</option>
+            <option value="td_creation">TD Creation</option>
+            <option value="mf_investment">MF Investment</option>
+            <option value="insurance_payment">Insurance Payment</option>
+            <option value="cash_deposit">Cash Deposit</option>
+            <option value="cheque_debit">Cheque Debit</option>
+            <option value="surcharge_reversal">Surcharge Reversal</option>
+            <option value="ft_debit">FT Debit</option>
+            <option value="td_interest">TD Interest</option>
+            <option value="credit_adjustment">Credit Adjustment</option>
+            <option value="cash_withdrawal_reversal">Cash Withdrawal Reversal</option>
+            <option value="auto_debit">Auto Debit</option>
+            <option value="surcharge">Surcharge</option>
+            <option value="salary_credit">Salary Credit</option>
+            <option value="ppf_payment">PPF Payment</option>
+            <option value="loan_repayment">Loan Repayment</option>
+            <option value="td_closure">TD Closure</option>
+            <option value="dc_annual_charge">DC Annual Charge</option>
+            <option value="sol_id_transfer">SOL ID Transfer</option>
+            <option value="not_identified">Not Identified</option>
+            <option value="cc_payment">CC Payment</option>
+            <option value="cash_withdrawal">Cash Withdrawal</option>
+            <option value="ft_reversal">FT Reversal</option>
+            <option value="demat">Demat</option>
+            <option value="dbt">DBT</option>
+            <option value="salary_payment">Salary Payment</option>
+            <option value="refund">Refund</option>
+            <option value="pension_investment">Pension Investment</option>
+        </select>
+
+        <label for="customer_code">Customer Code:</label>
+        <input type="text" id="customer_code" name="customer_code" placeholder="Enter Customer Code">
+
+        <label for="scheme_type">Scheme Type:</label>
+        <input type="text" id="scheme_type" name="scheme_type" placeholder="Enter Scheme Type">
+        <button id="filter-button">Filter</button>
+    </div>
+    <script>
+        document.getElementById('filter-button').addEventListener('click', function() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+            const transactionType = document.getElementById('transaction_type').value;
+            const customerCode = document.getElementById('customer_code').value;
+            const schemeType = document.getElementById('scheme_type').value;
+            const channel = document.getElementById('channel').value;
+        
+            let queryParams = new URLSearchParams();
+
+            console.log("test");
+            console.log(channel);
+            if (startDate) queryParams.append('start_date', startDate);
+            if (endDate) queryParams.append('end_date', endDate);
+            if (transactionType) queryParams.append('transaction_type', transactionType);
+            if (customerCode) queryParams.append('customer_code', customerCode);
+            if (schemeType) queryParams.append('scheme_type', schemeType);
+            if (channel) queryParams.append('channel', channel);
+        
+            window.location.href = `{% url 'results' %}?${queryParams.toString()}`;
+        });
+        </script>
+</body>
+</html>
+
